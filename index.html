@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QA Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#" class="logo">QA Portfolio</a>
+      <nav class="nav">
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#docs">Docs</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow">Junior QA Portfolio</p>
+          <h1>기능 테스트 경험을 바탕으로<br>
+              자동화 역량까지 넓혀가고 있는 테스터 이슬입니다.</h1> 
+          <p class="hero-desc">
+            입력값 검증, 상태 전이, 반응형 UI 테스트를 중심으로<br>
+            품질 이슈를 발견하고 문서화하는 과정을 포트폴리오에 담았습니다.</p>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">프로젝트 보기</a>
+            <a href="#docs" class="btn btn-secondary">문서 보기</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section alt-bg">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Projects</p>
+          <h2>프로젝트</h2>
+          <p>기능 구현과 QA 관점 검증을 함께 정리한 프로젝트입니다.</p>
+        </div>
+
+        <div class="card-grid">
+          <article class="card">
+            <p class="card-tag">HTML / CSS / JavaScript</p>
+            <h3>체험단 신청 페이지 포트폴리오</h3>
+            <p>
+              신청 폼, 쿠폰 버튼, 상품 링크, 이미지 노출, 반응형 UI를 기준으로
+              테스트 케이스를 설계한 프로젝트입니다.
+            </p>
+            <ul class="feature-list">
+              <li>입력값 검증</li>
+              <li>상태 전이 테스트</li>
+              <li>예외 처리 검증</li>
+              <li>Google Sheets 문서화</li>
+            </ul>
+            <div class="card-links">
+              <a href="project.html" class="btn btn-primary">상세 보기</a>
+              <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+            </div>
+          </article>
+
+          <article class="card">
+            <p class="card-tag">Python</p>
+            <h3>기능 검증 자동화 프로젝트</h3>
+            <p>
+              Playwright를 활용해 체험단 신청 페이지의 입력값 검증, 버튼 상태 변화, 메세지 노출 등 핵심 사용자 흐름을 자동화한 프로그램입니다.
+            </p>
+            <ul class="feature-list">
+              <li>입력값 유효성 검증</li>
+              <li>경계값 자동화 테스트</li>
+              <li>버튼 활성화 조건 확인</li>
+              <li>리그레이션 테스트 자동화</li>
+            </ul>
+            <div class="card-links">
+              <a href="automation.html" class="btn btn-primary">상세 보기</a>
+              <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">GitHub</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="section">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Skills</p>
+          <h2>블랙박스 테스트 역량</h2>
+          <p>테스트 수행보다 한 단계 더 나아가, 기준을 세우고 문서화하는 데 집중합니다.</p>
+        </div>
+
+        <div class="skill-grid">
+          <div class="skill-card">
+            <h3>테스트 케이스 작성</h3>
+            <p>기능 흐름을 기준으로 조건과 기대결과를 명확히 정리합니다.</p>
+          </div>
+          <div class="skill-card">
+            <h3>경계값 분석</h3>
+            <p>최소/최대 입력값과 임계 구간을 중점적으로 검증합니다.</p>
+          </div>
+          <div class="skill-card">
+            <h3>상태 전이 테스트</h3>
+            <p>쿠폰 발급 전/후, 버튼 활성/비활성처럼 상태 변화 중심으로 확인합니다.</p>
+          </div>
+          <div class="skill-card">
+            <h3>예외 처리 검증</h3>
+            <p>공백 입력, 잘못된 링크, 새로고침 초기화 등 비정상 흐름을 점검합니다.</p>
+          </div>
+          <div class="skill-card">
+            <h3>UI / 반응형 테스트</h3>
+            <p>PC, 태블릿, 모바일 환경에서 레이아웃 깨짐 여부를 확인합니다.</p>
+          </div>
+          <div class="skill-card">
+            <h3>문서화</h3>
+            <p>Excel 기반으로 테스트 케이스와 결과를 구조적으로 정리합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="docs" class="section alt-bg">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Documentation</p>
+          <h2>문서 및 링크</h2>
+          <p>프로젝트 결과와 테스트 문서를 바로 확인할 수 있도록 정리했습니다.</p>
+        </div>
+
+        <div class="doc-grid">
+          <a class="doc-card" href="https://docs.google.com/spreadsheets/d/1f1WjgWAk2b28fZZMcUYuTiBt3pwre59suEf9Xn5BGDU/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
+            <h3>Test Case</h3>
+            <p>실무형 테스트 케이스 문서 보기</p>
+          </a>
+
+          <a class="doc-card" href="#" target="_blank" rel="noopener noreferrer">
+            <h3>GitHub</h3>
+            <p>프로젝트 코드 저장소 보기</p>
+          </a>
+
+          <a class="doc-card" href="project.html">
+            <h3>Project Detail</h3>
+            <p>체험단 신청 페이지 상세 보기</p>
+          </a>
+          <a class="doc-card" href="tc_spec.html" >
+            <h3>TC 명세서</h3>
+            <p>상세 테스트 케이스 문서 보기</p>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="container about-box">
+        <div class="section-head left">
+          <p class="section-label">About</p>
+          <h2>저를 소개합니다</h2>
+        </div>
+        <div class="about-text">
+          <p>
+            UI/UX와 기능 검증, 유지보수 업무를 수행하며 사용자 경험과 서비스 안정성을 함께 살펴온 테스터입니다.
+            여기에 자동화 테스트 역량까지 확장하며, 수동 테스트와 자동화를 함께 이해하는 QA로 성장해가고 있습니다.
+          </p>
+          <p>
+            단순히 테스트를 수행하는 것을 넘어, 경계값과 예외 상황을 기준으로
+            테스트를 구조화하고 문서화하는 QA가 되고자 합니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section alt-bg">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Contact</p>
+          <h2>연락처</h2>
+        </div>
+
+        <div class="contact-list">
+          <div class="contact-item" onclick="copyEmail()">
+            <span class="contact-text">이메일 : seullee03@naver.com</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="copyToast" class="copy-toast">이메일이 복사되었습니다 ✓</div>
+
+  <script>
+    function copyEmail() {
+      navigator.clipboard.writeText('seullee03@naver.com').then(() => {
+        const toast = document.getElementById('copyToast');
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+      });
+    }
+  </script>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 QA Portfolio</p>
+    </div>
+  </footer>
+</body>
+</html>

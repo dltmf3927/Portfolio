@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>기능 검증 자동화 프로젝트 — QA Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">QA Portfolio</a>
+      <nav class="nav">
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#skills">QA Skills</a>
+        <a href="index.html#docs">Docs</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="eyebrow">Automation Testing</p>
+          <h1>기능 검증 자동화 프로젝트</h1>
+          <p class="hero-desc">
+            Playwright + pytest를 활용해 체험단 신청 페이지의 핵심 사용자 흐름을
+            41개 테스트 케이스로 자동화했습니다.
+          </p>
+
+          <div class="hero-meta">
+            <span class="badge"><span class="badge-dot"></span>Python</span>
+            <span class="badge"><span class="badge-dot green"></span>Playwright</span>
+            <span class="badge"><span class="badge-dot purple"></span>pytest</span>
+            <span class="badge"><span class="badge-dot orange"></span>pytest-playwright</span>
+          </div>
+
+          <div class="hero-buttons">
+            <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt-bg">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Overview</p>
+          <h2>테스트 개요</h2>
+          <p>자동화된 검증 범위와 구성을 한눈에 확인할 수 있습니다.</p>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-number">41</div>
+            <div class="stat-label">총 테스트 케이스</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">7</div>
+            <div class="stat-label">테스트 파일</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">30</div>
+            <div class="stat-label">최소 입력 경계 (자)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">100</div>
+            <div class="stat-label">최대 입력 경계 (자)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Test Files</p>
+          <h2>테스트 구성</h2>
+          <p>기능 단위로 테스트를 분리해 독립적으로 실행·관리할 수 있습니다.</p>
+        </div>
+
+        <div class="test-grid">
+
+          <div class="test-card">
+            <div class="test-card-top">
+              <div class="test-index">01</div>
+              <div class="test-info">
+                <div class="test-filename">test_01_initial_state.py</div>
+                <div class="test-title">초기 상태 검증</div>
+                <div class="test-desc">
+                  페이지 로드 시 버튼 비활성화, 카운터 0, 메시지 숨김 등
+                  초기 렌더링 상태를 전수 확인합니다.
+                </div>
+                <span class="test-count">7 케이스</span>
+                <button class="accordion-btn" onclick="toggleAccordion(this)">
+                  코드 보기 <span class="accordion-arrow">▼</span>
+                </button>
+              </div>
+            </div>
+            <div class="accordion-body">
+              <pre class="code-block">from playwright.sync_api import Page, expect
+from conftest import get_char_count, get_apply_count
+
+
+class TestInitialState:
+    def test_submit_button_disabled_on_load(self, page: Page):
+        expect(page.locator("#submitBtn")).to_be_disabled()
+
+    def test_submit_button_text_on_load(self, page: Page):
+        expect(page.locator("#submitBtn")).to_contain_text("30자")
+
+    def test_char_count_zero_on_load(self, page: Page):
+        assert get_char_count(page) == 0
+
+    def test_apply_count_zero_on_load(self, page: Page):
+        assert get_apply_count(page) == 0
+
+    def test_form_message_hidden_on_load(self, page: Page):
+        expect(page.locator("#formMessage")).to_have_class("message hidden")
+
+    def test_coupon_message_hidden_on_load(self, page: Page):
+        expect(page.locator("#couponMessage")).to_have_class("message hidden")
+
+    def test_apply_tab_active_on_load(self, page: Page):
+        expect(page.locator("#tabApply")).to_have_class("tab-btn active")
+        expect(page.locator("#cancelPanel")).to_have_class("hidden")</pre>
+            </div>
+          </div>
+
+          <div class="test-card">
+            <div class="test-card-top">
+              <div class="test-index">02</div>
+              <div class="test-info">
+                <div class="test-filename">test_02_boundary_values.py</div>
+                <div class="test-title">경계값 분석 (BVA)</div>
+                <div class="test-desc">
+                  29자(MIN-1), 30자(MIN), 31자(MIN+1), 100자(MAX) 4개 경계를
+                  기준으로 버튼 활성화·카운터·텍스트를 검증합니다.
+                </div>
+                <span class="test-count">8 케이스</span>
+                <button class="accordion-btn" onclick="toggleAccordion(this)">
+                  코드 보기 <span class="accordion-arrow">▼</span>
+                </button>
+              </div>
+            </div>
+            <div class="accordion-body">
+              <pre class="code-block">from playwright.sync_api import Page, expect
+from conftest import TEXT_29, TEXT_30, TEXT_31, TEXT_100, fill_reason, get_char_count
+
+
+class TestBoundaryValues:
+    def test_29_chars_button_disabled(self, page: Page):
+        fill_reason(page, TEXT_29)
+        expect(page.locator("#submitBtn")).to_be_disabled()
+
+    def test_29_chars_counter(self, page: Page):
+        fill_reason(page, TEXT_29)
+        assert get_char_count(page) == 29
+
+    def test_29_chars_button_text(self, page: Page):
+        fill_reason(page, TEXT_29)
+        expect(page.locator("#submitBtn")).to_contain_text("1자")
+
+    def test_30_chars_button_enabled(self, page: Page):
+        fill_reason(page, TEXT_30)
+        expect(page.locator("#submitBtn")).to_be_enabled()
+
+    def test_30_chars_button_text(self, page: Page):
+        fill_reason(page, TEXT_30)
+        expect(page.locator("#submitBtn")).to_have_text("체험단 신청하기")
+
+    def test_31_chars_button_enabled(self, page: Page):
+        fill_reason(page, TEXT_31)
+        expect(page.locator("#submitBtn")).to_be_enabled()
+
+    def test_100_chars_button_enabled(self, page: Page):
+        fill_reason(page, TEXT_100)
+        expect(page.locator("#submitBtn")).to_be_enabled()
+
+    def test_100_chars_counter(self, page: Page):
+        fill_reason(page, TEXT_100)
+        assert get_char_count(page) == 100</pre>
+            </div>
+          </div>
+
+          <div class="test-card">
+            <div class="test-card-top">
+              <div class="test-index">03</div>
+              <div class="test-info">
+                <div class="test-filename">test_03_whitespace_validation.py</div>
+                <div class="test-title">공백 입력 유효성 검증</div>
+                <div class="test-desc">
+                  공백만 입력, 앞공백 포함 30자 입력 등
+                  <code>trim()</code> 기반 글자 수 계산 로직을 검증합니다.
+                </div>
+                <span class="test-count">4 케이스</span>
+                <button class="accordion-btn" onclick="toggleAccordion(this)">
+                  코드 보기 <span class="accordion-arrow">▼</span>
+                </button>
+              </div>
+            </div>
+            <div class="accordion-body">
+              <pre class="code-block">from playwright.sync_api import Page, expect
+from conftest import (
+    MAX_LEN,
+    TEXT_SPACES_ONLY,
+    TEXT_SPACES_THEN_30,
+    fill_reason,
+    get_char_count,
+)
+
+
+class TestWhitespaceValidation:
+    def test_spaces_only_button_disabled(self, page: Page):
+        fill_reason(page, TEXT_SPACES_ONLY)
+        expect(page.locator("#submitBtn")).to_be_disabled()
+
+    def test_spaces_only_counter_zero(self, page: Page):
+        fill_reason(page, TEXT_SPACES_ONLY)
+        assert get_char_count(page) == 0
+
+    def test_leading_spaces_valid_30_chars(self, page: Page):
+        fill_reason(page, TEXT_SPACES_THEN_30)
+        expect(page.locator("#submitBtn")).to_be_enabled()
+
+    def test_max_length_attribute_exists(self, page: Page):
+        max_len = page.locator("#reason").get_attribute("maxlength")
+        assert max_len == str(MAX_LEN)</pre>
+            </div>
+          </div>
+
+          <div class="test-card">
+            <div class="test-card-top">
+              <div class="test-index">04</div>
+              <div class="test-info">
+                <div class="test-filename">test_04_apply_flow.py</div>
+                <div class="test-title">체험단 신청 흐름</div>
+                <div class="test-desc">
+                  정상 신청 성공 메시지·카운터 증가·버튼 상태 변화,
+                  중복 신청 예외 처리를 검증합니다.
+                </div>
+                <span class="test-count">5 케이스</span>
+                <button class="accordion-btn" onclick="toggleAccordion(this)">
+                  코드 보기 <span class="accordion-arrow">▼</span>
+                </button>
+              </div>
+            </div>
+            <div class="accordion-body">
+              <pre class="code-block">from playwright.sync_api import Page, expect
+from conftest import TEXT_30, fill_reason, get_apply_count
+
+
+class TestApplyFlow:
+    def test_successful_apply_shows_success_message(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        msg = page.locator("#formMessage")
+        expect(msg).not_to_have_class("hidden")
+        expect(msg).to_contain_text("정상적으로 접수")
+
+    def test_successful_apply_increments_count(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        assert get_apply_count(page) == 1
+
+    def test_successful_apply_disables_button(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        expect(page.locator("#submitBtn")).to_be_disabled()
+
+    def test_successful_apply_changes_button_text(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        expect(page.locator("#submitBtn")).to_have_text("신청 완료")
+
+    def test_duplicate_apply_shows_error(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        # disabled 버튼을 JS로 강제 재클릭하여 내부 상태 검증
+        page.evaluate("""
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = false;
+            btn.click();
+        """)
+        expect(page.locator("#formMessage")).to_contain_text("이미 신청이 완료된 상태")</pre>
+            </div>
+          </div>
+
+          <div class="test-card">
+            <div class="test-card-top">
+              <div class="test-index">05</div>
+              <div class="test-info">
+                <div class="test-filename">test_05_tab_cancel_flow.py</div>
+                <div class="test-title">탭 전환 및 취소 흐름</div>
+                <div class="test-desc">
+                  취소 탭 전환, 신청 취소 후 카운터 감소·폼 초기화,
+                  취소 후 재신청 시나리오를 검증합니다.
+                </div>
+                <span class="test-count">7 케이스</span>
+                <button class="accordion-btn" onclick="toggleAccordion(this)">
+                  코드 보기 <span class="accordion-arrow">▼</span>
+                </button>
+              </div>
+            </div>
+            <div class="accordion-body">
+              <pre class="code-block">from playwright.sync_api import Page, expect
+from conftest import TEXT_30, fill_reason, get_apply_count, get_char_count
+
+
+class TestTabAndCancelFlow:
+    def test_cancel_tab_shows_info_without_apply(self, page: Page):
+        page.locator("#tabCancel").click()
+        msg = page.locator("#cancelMessage")
+        expect(msg).not_to_have_class("hidden")
+        expect(msg).to_contain_text("신청된 내역이 없습니다")
+
+    def test_cancel_tab_cancel_button_disabled_without_apply(self, page: Page):
+        page.locator("#tabCancel").click()
+        expect(page.locator("#cancelApplyBtn")).to_be_disabled()
+
+    def test_cancel_tab_shows_submitted_reason(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        page.locator("#tabCancel").click()
+        expect(page.locator("#submittedReason")).to_have_text(TEXT_30)
+
+    def test_cancel_apply_decrements_count(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        assert get_apply_count(page) == 1
+        page.locator("#tabCancel").click()
+        page.locator("#cancelApplyBtn").click()
+        assert get_apply_count(page) == 0
+
+    def test_cancel_apply_shows_success_message(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        page.locator("#tabCancel").click()
+        page.locator("#cancelApplyBtn").click()
+        expect(page.locator("#cancelMessage")).to_contain_text("신청이 취소되었습니다")
+
+    def test_cancel_resets_form(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        page.locator("#tabCancel").click()
+        page.locator("#cancelApplyBtn").click()
+        page.locator("#tabApply").click()
+        expect(page.locator("#reason")).to_have_value("")
+        expect(page.locator("#submitBtn")).to_be_disabled()
+        assert get_char_count(page) == 0
+
+    def test_reapply_after_cancel(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        page.locator("#tabCancel").click()
+        page.locator("#cancelApplyBtn").click()
+        page.locator("#tabApply").click()
+        fill_reason(page, TEXT_30)
+        expect(page.locator("#submitBtn")).to_be_enabled()
+        page.locator("#submitBtn").click()
+        assert get_apply_count(page) == 1</pre>
+            </div>
+          </div>
+
+          <div class="test-card">
+            <div class="test-card-top">
+              <div class="test-index">06</div>
+              <div class="test-info">
+                <div class="test-filename">test_06_coupon_flow.py</div>
+                <div class="test-title">쿠폰 상태 전이</div>
+                <div class="test-desc">
+                  쿠폰 최초 발급 메시지, 발급 후 버튼 비활성화,
+                  중복 발급 시 오류 메시지 표시를 검증합니다.
+                </div>
+                <span class="test-count">4 케이스</span>
+                <button class="accordion-btn" onclick="toggleAccordion(this)">
+                  코드 보기 <span class="accordion-arrow">▼</span>
+                </button>
+              </div>
+            </div>
+            <div class="accordion-body">
+              <pre class="code-block">from playwright.sync_api import Page, expect
+
+
+class TestCouponFlow:
+    def test_first_coupon_click_shows_info(self, page: Page):
+        page.locator("#couponBtn").click()
+        msg = page.locator("#couponMessage")
+        expect(msg).not_to_have_class("hidden")
+        expect(msg).to_contain_text("쿠폰이 발급되었습니다")
+
+    def test_coupon_button_disabled_after_issue(self, page: Page):
+        page.locator("#couponBtn").click()
+        expect(page.locator("#couponBtn")).to_be_disabled()
+
+    def test_coupon_button_text_after_issue(self, page: Page):
+        page.locator("#couponBtn").click()
+        expect(page.locator("#couponBtn")).to_have_text("발급 완료")
+
+    def test_duplicate_coupon_shows_error(self, page: Page):
+        page.locator("#couponBtn").click()
+        # disabled 버튼을 JS로 강제 재클릭하여 내부 상태 검증
+        page.evaluate("""
+            const btn = document.getElementById('couponBtn');
+            btn.disabled = false;
+            btn.click();
+        """)
+        expect(page.locator("#couponMessage")).to_contain_text("이미 발급된 쿠폰")</pre>
+            </div>
+          </div>
+
+          <div class="test-card">
+            <div class="test-card-top">
+              <div class="test-index">07</div>
+              <div class="test-info">
+                <div class="test-filename">test_07_regression.py</div>
+                <div class="test-title">회귀 테스트</div>
+                <div class="test-desc">
+                  쿠폰·신청 상태 독립성, 탭 전환 후 상태 유지,
+                  카운터 음수 방지, 전체 시나리오 흐름을 검증합니다.
+                </div>
+                <span class="test-count">6 케이스</span>
+                <button class="accordion-btn" onclick="toggleAccordion(this)">
+                  코드 보기 <span class="accordion-arrow">▼</span>
+                </button>
+              </div>
+            </div>
+            <div class="accordion-body">
+              <pre class="code-block">from playwright.sync_api import Page, expect
+from conftest import TEXT_30, fill_reason, get_apply_count, get_char_count
+
+
+class TestRegression:
+    def test_coupon_state_independent_from_apply(self, page: Page):
+        page.locator("#couponBtn").click()
+        fill_reason(page, TEXT_30)
+        expect(page.locator("#submitBtn")).to_be_enabled()
+
+    def test_apply_state_independent_from_coupon(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        page.locator("#couponBtn").click()
+        expect(page.locator("#couponMessage")).to_contain_text("쿠폰이 발급되었습니다")
+
+    def test_tab_switch_preserves_applied_state(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        page.locator("#tabCancel").click()
+        page.locator("#tabApply").click()
+        expect(page.locator("#submitBtn")).to_be_disabled()
+        expect(page.locator("#submitBtn")).to_have_text("신청 완료")
+
+    def test_counter_not_negative_after_forced_double_cancel(self, page: Page):
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        page.locator("#tabCancel").click()
+        page.locator("#cancelApplyBtn").click()
+        # disabled 버튼 강제 재클릭
+        page.evaluate("""
+            const btn = document.getElementById('cancelApplyBtn');
+            btn.disabled = false;
+            btn.click();
+        """)
+        assert get_apply_count(page) >= 0
+
+    def test_apply_tab_panel_visible_after_cancel_tab(self, page: Page):
+        page.locator("#tabCancel").click()
+        page.locator("#tabApply").click()
+        expect(page.locator("#applyPanel")).not_to_have_class("hidden")
+        expect(page.locator("#cancelPanel")).to_have_class("hidden")
+
+    def test_full_flow_apply_cancel_reapply(self, page: Page):
+        # 1차 신청
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        assert get_apply_count(page) == 1
+
+        # 취소
+        page.locator("#tabCancel").click()
+        page.locator("#cancelApplyBtn").click()
+        assert get_apply_count(page) == 0
+
+        # 재신청
+        page.locator("#tabApply").click()
+        fill_reason(page, TEXT_30)
+        page.locator("#submitBtn").click()
+        assert get_apply_count(page) == 1
+        expect(page.locator("#formMessage")).to_contain_text("정상적으로 접수")</pre>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt-bg">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Tech Stack</p>
+          <h2>기술 스택</h2>
+          <p>테스트 자동화에 사용한 언어와 도구입니다.</p>
+        </div>
+
+        <div class="stack-list">
+          <div class="stack-item">
+            <span class="stack-name">Python</span>
+            <span class="stack-role">테스트 작성 언어</span>
+          </div>
+          <div class="stack-item">
+            <span class="stack-name">Playwright</span>
+            <span class="stack-role">브라우저 자동화</span>
+          </div>
+          <div class="stack-item">
+            <span class="stack-name">pytest</span>
+            <span class="stack-role">테스트 러너 · 프레임워크</span>
+          </div>
+          <div class="stack-item">
+            <span class="stack-name">pytest-playwright</span>
+            <span class="stack-role">Playwright 공식 플러그인</span>
+          </div>
+          <div class="stack-item">
+            <span class="stack-name">conftest.py</span>
+            <span class="stack-role">공통 fixture · 헬퍼 관리</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt-bg">
+      <div class="container">
+        <div class="section-head">
+          <p class="section-label">Demo</p>
+          <h2>실행 영상</h2>
+          <p>pytest + Playwright로 자동화 테스트가 실행되는 과정을 확인할 수 있습니다.</p>
+        </div>
+
+        <div class="video-wrap">
+          <video
+            src="images/pytest_result.mp4"
+            controls
+            muted
+            playsinline
+          >
+            브라우저가 video 태그를 지원하지 않습니다.
+          </video>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 QA Portfolio.</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleAccordion(btn) {
+      const body = btn.closest('.test-card').querySelector('.accordion-body');
+      const isOpen = body.classList.contains('open');
+      btn.classList.toggle('open', !isOpen);
+      body.classList.toggle('open', !isOpen);
+      btn.innerHTML = isOpen
+        ? '코드 보기 <span class="accordion-arrow">▼</span>'
+        : '접기 <span class="accordion-arrow">▲</span>';
+    }
+  </script>
+
+</body>
+</html>

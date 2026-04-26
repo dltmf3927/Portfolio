@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QA 포트폴리오 | 체험단 페이지</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="layout">
+    <!-- 왼쪽 대시보드 -->
+    <section class="left-panel">
+      <div class="card">
+
+        <div class="card-header">
+          <div>
+            <h1>[프로모션] 스킨푸드 체험단</h1>
+          </div>
+          <div class="date-badges">
+            <span>신청: xx.xx ~ xx.xx</span>
+            <span>배송/후기작성: xx.xx ~ xx.xx</span>
+          </div>
+        </div>
+
+        <div class="hero-box">
+          <div class="hero-left">
+            <span class="event-badge">NEW EVENT</span>
+            <h2>레몬그라스 나이아신아마이드5% 패드</h2>
+            <h3>피지와 유수분 밸런스 케어 체험단 모집</h3>
+          </div>
+          <div class="image-group">
+            <div class="product-circle">
+              <img src="images/Lpad5_User.png" alt="스킨푸드 레몬그라스 나이아신아마이드5% 패드 세트 상품 이미지" />
+            </div>
+            <div class="usage-box">
+              <img src="images/Lpad5_Howto_Use.png" alt="스킨푸드 레몬그라스 나이아신아마이드5% 패드 세트 사용법 이미지" />
+            </div>
+          </div>
+        </div>
+
+        <div class="coupon-box">
+          <div>
+            <p class="coupon-label">Special Gift</p>
+            <p class="coupon-title">구매 시 즉시 사용 30% 할인 쿠폰</p>
+          </div>
+          <button id="couponBtn" class="coupon-btn">쿠폰 받기</button>
+        </div>
+
+        <div id="couponMessage" class="message hidden"></div>
+
+        <div class="period-row">
+          <div class="period-col">
+            <p class="period-label">신청 기간</p>
+            <p class="period-value">xx.xx ~ xx.xx</p>
+          </div>
+          <div class="period-col">
+            <p class="period-label">배송/후기작성 기간</p>
+            <p class="period-value">xx.xx ~ xx.xx</p>
+          </div>
+        </div>
+
+        <div class="related-section">
+          <p class="related-label">관련 상품</p>
+          <a class="related-card" href="https://theskinfood.com/shop/shopdetail.html?branduid=10323344&xcode=050&mcode=001&scode=012&type=Y&sort=manual&current_category=050&search=&GfDT=bmZ3UF4%3D" target="_blank" rel="noopener noreferrer">
+            <div class="related-img-box">
+              <img src="images/Lpad5.jpg" alt="레몬그라스 나이아신아마이드5% 패드" />
+            </div>
+            <div class="related-info">
+              <p class="related-brand">SKINFOOD</p>
+              <p class="related-name">레몬그라스 나이아신아마이드5% 패드</p>
+              <p class="related-price">8,000원</p>
+            </div>
+          </a>
+        </div>
+
+        <div class="trial-section">
+          <div class="trial-img">
+            <img src="images/Lpad5_Confirm.jpg" alt="레몬그라스 나이아신아마이드5% 패드" />
+          </div>
+          <p class="trial-title">체험 상품을 확인해 주세요</p>
+          <div class="trial-item">
+            <span class="trial-name">레몬그라스 나이아신아마이드5% 패드</span>
+            <span class="trial-count">모집 <strong>40</strong>명 · 신청 <strong id="applyCount">0</strong>명</span>
+          </div>
+        </div>
+
+        <div class="privacy-box">
+          <p class="privacy-title">개인정보 수집 및 이용 안내 (필수)</p>
+          <div class="privacy-scroll">
+            <p>· 목적: 신체/체험단평가 결과 및 마케팅 성과 연구</p>
+            <p>· 수집항목: 성명, 연락처, 진행현황</p>
+            <p>· 수집이용 기간: 동의 후 3개월 보존, 모든 종료 시 해당 법에 따른 예외를 제외하고 지체 없이 파기 (단, 관계법령에 특별한 규정이 있을 경우 관련 법령 준수)</p>
+            <p>· 고객님께서는 동의거부권이 있으나 미동의 시 서비스 이용에 제한이 있을 수 있습니다. 수집된 개인정보는 제3자에게 제공하거나 공개하지 않습니다.</p>
+            <p>· 체험단 신청 결과 (당첨 여부 이메일/앱 푸시알림)은 수락여부 해당 회원 및 위탁사(수신대행)에 제공되며, 본인 수신 거부 시 수신 거부 이후 정상적인 체험단 당첨안내 발송이 불가합니다.</p>
+          </div>
+        </div>
+
+        <div class="form-section">
+          <div class="form-tabs">
+            <button class="tab-btn active" id="tabApply">체험단 신청</button>
+            <button class="tab-btn" id="tabCancel">신청 취소</button>
+          </div>
+
+          <div id="applyPanel">
+            <div class="form-top">
+              <label for="reason">신청 이유를 입력해주세요</label>
+              <span id="charCount">0 / 100</span>
+            </div>
+            <p class="guide-text">공백 제외 30자 이상 100자 이하로 입력해주세요.</p>
+            <textarea
+              id="reason"
+              maxlength="100"
+              placeholder="제품에 대한 기대평을 입력해주세요."
+            ></textarea>
+            <div id="formMessage" class="message hidden"></div>
+            <button id="submitBtn" class="submit-btn" disabled>
+              30자 더 입력 시 신청 가능
+            </button>
+          </div>
+
+          <div id="cancelPanel" class="hidden">
+            <p class="cancel-panel-label">제출한 신청 내용</p>
+            <div id="submittedReason" class="submitted-reason"></div>
+            <div id="cancelMessage" class="message hidden"></div>
+            <button id="cancelApplyBtn" class="submit-btn cancel-apply-btn">
+              신청 취소하기
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 오른쪽 대시보드 -->
+    <section class="right-panel">
+      <div class="dashboard">
+        <div class="dashboard-header">
+          <h3>QA Dashboard</h3>
+          <p>Quality Assurance Strategy</p>
+        </div>
+
+        <div class="dashboard-box">
+          <h4>주요 테스트 검증 포인트</h4>
+          <ul>
+            <li>최소 글자 수(30자) 경계값 분석 테스트</li>
+            <li>최대 글자 수(100자) 입력 제한 테스트</li>
+            <li>공백 입력 시 유효성 검증 테스트</li>
+            <li>쿠폰 중복 발급 방지 상태 전이 테스트</li>
+            <li>성공/실패 메시지 노출 검증</li>
+          </ul>
+        </div>
+
+        <div class="dashboard-box">
+          <h4>적용한 테스트 기법</h4>
+          <ul>
+            <li>경계값 분석 (BVA)</li>
+            <li>동등 분할</li>
+            <li>상태 전이 테스트</li>
+            <li>예외 처리 검증</li>
+          </ul>
+        </div>
+
+        <div class="dashboard-box">
+          <h4>QA Insight</h4>
+          <ul>
+            <li>버튼 활성화 조건과 실제 제출 조건은 일치해야 함</li>
+            <li>alert 대신 인라인 메시지가 UX에 더 적합함</li>
+            <li>실서비스에서는 서버 기반 중복 발급 방지가 필요함</li>
+            <li>모바일 화면에서 레이아웃 가독성 확인 필요</li>
+          </ul>
+        </div>
+
+        <div class="dashboard-box">
+          <h4>Detailed Documentation</h4>
+          <a
+            class="link-card"
+            href="tc_spec.html"
+          >
+            상세 TC 명세서 보기
+          </a>
+        </div>
+
+        <div class="dashboard-note">
+          <h4>QA Note</h4>
+          <p>
+            본 프로젝트는 단순 UI 구현이 아니라, 입력 검증과 상태변화에 대해
+            QA 관점으로 테스트 시나리오를 설계한 포트폴리오입니다.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

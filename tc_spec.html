@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TC 명세서 — 체험단 신청 페이지</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .tc-hero {
+      padding: 56px 0 40px;
+      text-align: center;
+    }
+    .tc-hero h1 {
+      margin: 16px 0 12px;
+      font-size: 36px;
+      color: #0f172a;
+    }
+    .tc-hero p {
+      margin: 0;
+      color: #64748b;
+      font-size: 16px;
+    }
+
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .filter-btn {
+      padding: 7px 16px;
+      border-radius: 999px;
+      border: 1px solid #dbe3ec;
+      background: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+
+    .tc-table-wrap {
+      overflow-x: auto;
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 16px rgba(15,23,42,0.06);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #ffffff;
+    }
+    thead tr {
+      background: #f8fafc;
+      border-bottom: 2px solid #e2e8f0;
+    }
+    thead th {
+      padding: 14px 16px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 800;
+      color: #64748b;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      text-align: center;
+    }
+    tbody tr {
+      border-bottom: 1px solid #f1f5f9;
+      transition: background 0.15s;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: #f8fafc; }
+    tbody td {
+      padding: 14px 16px;
+      color: #334155;
+      vertical-align: top;
+      line-height: 1.6;
+    }
+
+    /* 컬럼 너비 */
+    .col-id     { width: 72px;  white-space: nowrap; }
+    .col-area   { width: 110px; white-space: nowrap; }
+    .col-case   { min-width: 200px; }
+    .col-step   { min-width: 220px; }
+    .col-expect { min-width: 220px; }
+    .col-result { width: 88px;  white-space: nowrap; }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+    .tag-func  { background: #eff6ff; color: #1d4ed8; }
+    .tag-nfunc { background: #f5f3ff; color: #6d28d9; }
+    .tag-pass  { background: #ecfdf5; color: #047857; }
+
+    tr.group-header td {
+      background: #f1f5f9;
+      font-size: 12px;
+      font-weight: 800;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 10px 16px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .step-list {
+      margin: 0;
+      padding-left: 16px;
+      color: #475569;
+    }
+    .step-list li { margin-bottom: 2px; }
+
+    .back-row {
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .tc-hero h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo">QA Portfolio</a>
+      <nav class="nav">
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#skills">QA Skills</a>
+        <a href="index.html#docs">Docs</a>
+        <a href="index.html#about">About</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="tc-hero">
+      <div class="container">
+        <p class="eyebrow">TC Specification</p>
+        <h1>체험단 신청 페이지 TC 명세서</h1>
+        <p>기능/비기능 관점의 테스트 케이스를 정리했습니다.</p>
+      </div>
+    </section>
+
+    <section class="section alt-bg" style="padding: 32px 0;">
+      <div class="container">
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-number">42</div>
+            <div class="stat-label">총 TC 수</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">30</div>
+            <div class="stat-label">기능 TC</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">12</div>
+            <div class="stat-label">비기능 TC</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">7</div>
+            <div class="stat-label">테스트 영역</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterTC('all', this)">전체</button>
+          <button class="filter-btn" onclick="filterTC('func', this)">기능</button>
+          <button class="filter-btn" onclick="filterTC('nfunc', this)">비기능</button>
+        </div>
+
+        <div class="tc-table-wrap">
+          <table id="tcTable">
+            <thead>
+              <tr>
+                <th class="col-id">TC ID</th>
+                <th class="col-area">테스트 영역</th>
+                <th class="col-case">테스트 항목</th>
+                <th class="col-step">사전조건</th>
+                <th class="col-step">실행순서</th>
+                <th class="col-expect">기대 결과</th>
+                <th class="col-result">결과</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr class="group-header"><td colspan="7">01. 초기 상태 — 페이지 로드 시 기본 렌더링 검증</td></tr>
+
+              <tr data-type="pos func">
+                <td class="col-id">TC-001</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>페이지 로드 시, 신청 버튼 비활성화 확인</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>신청하기 버튼이 흐리게 표시되는지 확인</li><li>버튼에 표시된 텍스트 확인</li></ol></td>
+                <td>"30자 더 입력 시 신청 가능" 문구와 함께 버튼이 흐리게 비활성화되어 있음</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-002</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>페이지 로드 시, 글자 수 카운터 0 확인</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>입력창 위에 표시된 글자 수 확인</li></ol></td>
+                <td>글자 수 카운터가 "0 / 100"으로 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-003</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>페이지 로드 시, 신청 탭이 기본 활성화</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>신청 탭이 선택된 상태인지 확인</li><li>취소 패널이 화면에 보이지 않는지 확인</li></ol></td>
+                <td>신청 탭이 선택(활성화)된 상태이고, 취소 패널은 화면에 보이지 않음</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-004</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>페이지 로드 시, 폼·쿠폰 메시지 비노출</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>신청 폼 아래 메시지가 보이지 않는지 확인</li><li>쿠폰 영역 안내 메시지가 보이지 않는지 확인</li></ol></td>
+                <td>신청 메시지와 쿠폰 메시지 모두 화면에 표시되지 않음</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+
+              <tr class="group-header"><td colspan="7">02. 입력값 유효성 — 경계값 분석(BVA) · 동등분할</td></tr>
+
+              <tr data-type="neg func">
+                <td class="col-id">TC-005</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>29자 입력 시 버튼 비활성화 (MIN-1)</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>입력창에 29자를 입력</li><li>신청하기 버튼이 비활성화 상태인지 확인</li><li>버튼에 표시된 텍스트 확인</li></ol></td>
+                <td>신청하기 버튼이 비활성화되고 "1자 더 입력 시 신청 가능"으로 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-006</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>30자 입력 시 버튼 활성화 (MIN 경계)</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>입력창에 30자를 입력</li><li>신청하기 버튼이 활성화되는지 확인</li><li>버튼에 표시된 텍스트 확인</li></ol></td>
+                <td>신청하기 버튼이 활성화되고 텍스트가 "체험단 신청하기"로 변경됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-007</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>31자 입력 시 버튼 활성화 (MIN+1)</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>입력창에 31자를 입력</li><li>신청하기 버튼이 활성화되는지 확인</li></ol></td>
+                <td>신청하기 버튼이 활성화됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-008</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>100자 입력 시 버튼 활성화 (MAX 경계)</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>입력창에 100자를 입력</li><li>신청하기 버튼이 활성화되는지 확인</li><li>글자 수 카운터가 "100 / 100"인지 확인</li></ol></td>
+                <td>신청하기 버튼이 활성화되고 카운터가 "100 / 100"으로 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="neg func">
+                <td class="col-id">TC-009</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>공백만 입력 시 버튼 비활성화</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>입력창에 공백 60자를 입력</li><li>신청하기 버튼이 비활성화 상태인지 확인</li><li>글자 수 카운터가 "0 / 100"인지 확인</li></ol></td>
+                <td>공백은 글자로 인식되지 않아 버튼이 비활성화 상태이고 카운터는 "0 / 100" 유지</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-010</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>앞 공백 포함 유효 30자 → 버튼 활성화</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>입력창에 공백 3자 + 한글 30자를 입력</li><li>신청하기 버튼이 활성화되는지 확인</li></ol></td>
+                <td>앞뒤 공백을 제외하고 30자로 인식해 신청 버튼이 활성화됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="neg func">
+                <td class="col-id">TC-011</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>maxlength=100 초과 입력 차단</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>입력창에 101자를 붙여넣기</li><li>실제로 입력된 글자 수 확인</li></ol></td>
+                <td>100자까지만 입력되고 101번째 문자는 자동으로 차단됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+
+              <tr class="group-header"><td colspan="7">03. 체험단 신청 흐름</td></tr>
+
+              <tr data-type="pos func">
+                <td class="col-id">TC-012</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>유효 입력 후 신청 → 성공 메시지 노출</td>
+                <td>입력창에 30자 이상 입력 완료</td>
+                <td><ol class="step-list"><li>신청하기 버튼 클릭</li><li>신청 폼 아래 메시지 내용 확인</li></ol></td>
+                <td>성공 메시지 "체험단 신청이 정상적으로 접수되었습니다."가 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-013</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>신청 성공 후 신청 인원 1 증가</td>
+                <td>입력창에 30자 이상 입력 완료</td>
+                <td><ol class="step-list"><li>신청하기 버튼 클릭</li><li>화면에 표시된 신청 인원 수 확인</li></ol></td>
+                <td>신청 인원이 0명 → 1명으로 증가함</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-014</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>신청 성공 후 버튼 비활성화 + 텍스트 변경</td>
+                <td>입력창에 30자 이상 입력 완료</td>
+                <td><ol class="step-list"><li>신청하기 버튼 클릭</li><li>버튼이 비활성화됐는지 확인</li><li>버튼에 표시된 텍스트 확인</li></ol></td>
+                <td>버튼이 비활성화되고 텍스트가 "신청 완료"로 변경됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="neg func">
+                <td class="col-id">TC-015</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>이미 신청 완료 상태에서 재신청 시 오류 메시지</td>
+                <td>신청 완료 상태</td>
+                <td><ol class="step-list"><li>테스트를 위해 버튼을 임시로 활성화</li><li>신청 버튼 재클릭</li><li>오류 메시지 내용 확인</li></ol></td>
+                <td>오류 메시지 "이미 신청이 완료된 상태입니다."가 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="neg func">
+                <td class="col-id">TC-016</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>29자 입력 상태에서 신청 버튼 클릭 불가</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>입력창에 29자를 입력</li><li>신청 버튼 클릭 시도</li><li>버튼이 비활성화 상태인지 확인</li></ol></td>
+                <td>버튼이 비활성화 상태로 클릭 자체가 되지 않음</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+
+              <tr class="group-header"><td colspan="7">04. 탭 전환 — 신청 탭 ↔ 취소 탭</td></tr>
+
+              <tr data-type="pos func">
+                <td class="col-id">TC-017</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>취소 탭 클릭 → 취소 패널 노출·신청 패널 숨김</td>
+                <td>페이지 로드 완료, 신청 탭 활성화 상태</td>
+                <td><ol class="step-list"><li>취소 탭 클릭</li><li>취소 패널이 화면에 나타나는지 확인</li><li>신청 패널이 화면에서 사라지는지 확인</li></ol></td>
+                <td>취소 패널이 화면에 표시되고, 신청 패널은 숨겨짐</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-018</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>신청 전 취소 탭 → "내역 없음" 안내 메시지</td>
+                <td>신청하지 않은 상태</td>
+                <td><ol class="step-list"><li>취소 탭 클릭</li><li>취소 탭 안내 메시지 내용 확인</li></ol></td>
+                <td>안내 메시지 "아직 신청된 내역이 없습니다."가 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="neg func">
+                <td class="col-id">TC-019</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>신청 전 취소 탭 → 취소 버튼 비활성화</td>
+                <td>신청하지 않은 상태</td>
+                <td><ol class="step-list"><li>취소 탭 클릭</li><li>취소 버튼이 비활성화 상태인지 확인</li></ol></td>
+                <td>신청 내역이 없으므로 취소 버튼이 비활성화 상태로 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-020</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>신청 후 취소 탭 → 제출 내용 노출</td>
+                <td>신청 완료 상태</td>
+                <td><ol class="step-list"><li>취소 탭 클릭</li><li>기존에 제출한 신청 내용이 표시되는지 확인</li></ol></td>
+                <td>신청 시 입력한 텍스트가 그대로 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-021</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>탭 전환 후 신청 완료 상태 유지</td>
+                <td>신청 완료 상태</td>
+                <td><ol class="step-list"><li>취소 탭 클릭</li><li>신청 탭 다시 클릭</li><li>신청하기 버튼 상태와 텍스트 확인</li></ol></td>
+                <td>탭을 전환해도 버튼은 여전히 비활성화 상태이며 "신청 완료" 텍스트 유지됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+
+              <!-- ════ 신청 취소 흐름 ════ -->
+              <tr class="group-header"><td colspan="7">05. 신청 취소 흐름</td></tr>
+
+              <tr data-type="pos func">
+                <td class="col-id">TC-022</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>취소 성공 → 성공 메시지 노출</td>
+                <td>신청 완료 상태, 취소 탭 활성화</td>
+                <td><ol class="step-list"><li>취소 버튼 클릭</li><li>취소 완료 메시지 내용 확인</li></ol></td>
+                <td>성공 메시지 "신청이 취소되었습니다."가 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-023</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>취소 후 신청 인원 1 감소</td>
+                <td>신청 완료 상태 (신청 인원 1명), 취소 탭 활성화</td>
+                <td><ol class="step-list"><li>취소 버튼 클릭</li><li>화면에 표시된 신청 인원 수 확인</li></ol></td>
+                <td>신청 인원이 1명 → 0명으로 감소함</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-024</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>취소 후 신청 탭 폼 전체 초기화</td>
+                <td>취소 처리 완료 상태</td>
+                <td><ol class="step-list"><li>신청 탭 클릭</li><li>입력창이 비어있는지 확인</li><li>글자 수 카운터 확인</li><li>신청하기 버튼 상태 확인</li></ol></td>
+                <td>입력창이 초기화되고, 카운터가 0이며, 신청 버튼이 비활성화 상태임</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-025</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>취소 후 재신청 가능</td>
+                <td>취소 처리 완료, 폼 초기화 상태</td>
+                <td><ol class="step-list"><li>신청 탭 클릭</li><li>입력창에 30자를 입력</li><li>신청 버튼 클릭</li><li>신청 인원 수 확인</li></ol></td>
+                <td>재신청이 정상 처리되고 신청 인원이 다시 1명으로 증가함</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="neg func">
+                <td class="col-id">TC-026</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>취소 후 카운터 음수 방지 (0 미만 불가)</td>
+                <td>취소 완료 상태 (신청 인원 0명)</td>
+                <td><ol class="step-list"><li>테스트를 위해 취소 버튼을 임시로 활성화</li><li>취소 버튼 재클릭</li><li>신청 인원 수 확인</li></ol></td>
+                <td>신청 인원이 0명 아래로 내려가지 않고 0명을 유지함</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+
+              <tr class="group-header"><td colspan="7">06. 쿠폰 발급 — 상태 전이 테스트</td></tr>
+
+              <tr data-type="pos func">
+                <td class="col-id">TC-027</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>쿠폰 받기 클릭 → 발급 안내 메시지 노출</td>
+                <td>쿠폰을 아직 받지 않은 상태</td>
+                <td><ol class="step-list"><li>쿠폰 받기 버튼 클릭</li><li>쿠폰 영역 안내 메시지 내용 확인</li></ol></td>
+                <td>안내 메시지 "10% 할인 쿠폰이 발급되었습니다."가 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-028</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>발급 후 버튼 비활성화 + 텍스트 "발급 완료"</td>
+                <td>쿠폰을 아직 받지 않은 상태</td>
+                <td><ol class="step-list"><li>쿠폰 받기 버튼 클릭</li><li>버튼이 비활성화됐는지 확인</li><li>버튼에 표시된 텍스트 확인</li></ol></td>
+                <td>버튼이 비활성화되고 텍스트가 "발급 완료"로 변경됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="neg func">
+                <td class="col-id">TC-029</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>중복 쿠폰 발급 시 오류 메시지</td>
+                <td>이미 쿠폰을 받은 상태</td>
+                <td><ol class="step-list"><li>테스트를 위해 버튼을 임시로 활성화</li><li>쿠폰 받기 버튼 재클릭</li><li>오류 메시지 내용 확인</li></ol></td>
+                <td>오류 메시지 "이미 발급된 쿠폰입니다."가 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos func">
+                <td class="col-id">TC-030</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>쿠폰 발급 상태와 신청 상태 독립 동작</td>
+                <td>이미 쿠폰을 받은 상태</td>
+                <td><ol class="step-list"><li>입력창에 30자를 입력</li><li>신청하기 버튼이 활성화되는지 확인</li></ol></td>
+                <td>쿠폰 수령 여부와 관계없이 신청 버튼이 정상적으로 활성화됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+
+              <tr class="group-header"><td colspan="7">07. 관련 상품 링크</td></tr>
+
+              <tr data-type="pos func">
+                <td class="col-id">TC-031</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>관련 상품 클릭 → 외부 링크 새 탭 열림</td>
+                <td>페이지 로드 완료, 인터넷 연결 정상</td>
+                <td><ol class="step-list"><li>관련 상품 카드 클릭</li><li>새 탭이 열리는지 확인</li><li>스킨푸드 상품 페이지가 정상적으로 열리는지 확인</li></ol></td>
+                <td>새 탭에서 스킨푸드 상품 페이지가 정상적으로 열림</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="neg func">
+                <td class="col-id">TC-032</td>
+                <td><span class="tag tag-func">기능</span></td>
+                <td>관련 상품 이미지 로딩 실패 시 alt 텍스트 표시</td>
+                <td>이미지 파일 경로를 존재하지 않는 경로로 임시 변경</td>
+                <td><ol class="step-list"><li>페이지 새로고침</li><li>이미지 영역 확인</li><li>이미지 대신 대체 텍스트가 표시되는지 확인</li></ol></td>
+                <td>이미지가 로드되지 않을 경우 "레몬그라스 나이아신아마이드5% 패드" 대체 텍스트가 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+
+              <tr class="group-header"><td colspan="7">08. 비기능 — 반응형 UI · 접근성 · 렌더링</td></tr>
+
+              <tr data-type="pos nfunc">
+                <td class="col-id">TC-033</td>
+                <td><span class="tag tag-nfunc">비기능</span></td>
+                <td>PC(1280px) 2단 레이아웃 정상 표시</td>
+                <td>브라우저 준비 완료</td>
+                <td><ol class="step-list"><li>브라우저 너비를 1280px로 설정</li><li>페이지 접속</li><li>왼쪽·오른쪽 패널이 나란히 배치되는지 확인</li></ol></td>
+                <td>왼쪽 패널(70%)과 오른쪽 패널(30%)이 좌우로 나란히 배치됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos nfunc">
+                <td class="col-id">TC-034</td>
+                <td><span class="tag tag-nfunc">비기능</span></td>
+                <td>태블릿(1024px) 단일 컬럼 전환</td>
+                <td>1280px 너비에서 페이지 로드 완료</td>
+                <td><ol class="step-list"><li>브라우저 너비를 1024px로 축소</li><li>레이아웃이 세로로 변경되는지 확인</li></ol></td>
+                <td>좌·우 패널이 위아래로 쌓이는 단일 컬럼 레이아웃으로 전환됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos nfunc">
+                <td class="col-id">TC-035</td>
+                <td><span class="tag tag-nfunc">비기능</span></td>
+                <td>모바일(375px) 카드 패딩·폰트 크기 확인</td>
+                <td>브라우저 준비 완료</td>
+                <td><ol class="step-list"><li>브라우저 너비를 375px로 설정</li><li>카드 안쪽 여백이 적절한지 확인</li><li>글자 크기가 읽기에 적합한지 확인</li></ol></td>
+                <td>카드 여백이 20px로 유지되고 레이아웃이 깨지지 않음</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="neg nfunc">
+                <td class="col-id">TC-036</td>
+                <td><span class="tag tag-nfunc">비기능</span></td>
+                <td>모바일에서 버튼·쿠폰박스 세로 배치 확인</td>
+                <td>브라우저 너비 375px 설정 완료</td>
+                <td><ol class="step-list"><li>쿠폰 영역이 세로로 배치되는지 확인</li><li>버튼이 화면 전체 너비로 표시되는지 확인</li></ol></td>
+                <td>쿠폰 영역이 세로로 배치되고, 버튼이 전체 너비로 표시됨</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos nfunc">
+                <td class="col-id">TC-037</td>
+                <td><span class="tag tag-nfunc">비기능</span></td>
+                <td>모든 이미지에 alt 속성 존재 (접근성)</td>
+                <td>페이지 소스 접근 가능</td>
+                <td><ol class="step-list"><li>페이지 내 모든 이미지 태그 확인</li><li>각 이미지에 대체 텍스트가 있는지 확인</li></ol></td>
+                <td>상품 이미지 4개(Lpad5_User.png, Howto_Use.png, Lpad5.jpg, Confirm.jpg) 모두 대체 텍스트 존재</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos nfunc">
+                <td class="col-id">TC-038</td>
+                <td><span class="tag tag-nfunc">비기능</span></td>
+                <td>textarea label for·id 매핑 (접근성)</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>입력창과 레이블이 올바르게 연결되어 있는지 확인</li><li>레이블 텍스트("신청 이유를 입력해주세요") 클릭</li><li>입력창에 커서가 자동으로 이동하는지 확인</li></ol></td>
+                <td>레이블 클릭 시 입력창에 커서가 자동으로 이동함</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="pos nfunc">
+                <td class="col-id">TC-039</td>
+                <td><span class="tag tag-nfunc">비기능</span></td>
+                <td>개인정보 영역 스크롤 동작 확인</td>
+                <td>페이지 로드 완료</td>
+                <td><ol class="step-list"><li>개인정보 안내 영역 내에서 스크롤</li><li>페이지 전체 스크롤과 독립적으로 동작하는지 확인</li></ol></td>
+                <td>고정 높이(100px) 안에서 내부만 스크롤되고 페이지 전체는 움직이지 않음</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+              <tr data-type="neg nfunc">
+                <td class="col-id">TC-040</td>
+                <td><span class="tag tag-nfunc">비기능</span></td>
+                <td>페이지 새로고침 시 상태 초기화 확인</td>
+                <td>신청·쿠폰 발급 완료 상태</td>
+                <td><ol class="step-list"><li>F5 키로 페이지 새로고침</li><li>신청 완료 여부가 초기화됐는지 확인</li><li>쿠폰 발급 여부가 초기화됐는지 확인</li><li>신청 인원 수가 초기화됐는지 확인</li></ol></td>
+                <td>새로고침 후 신청 및 쿠폰 상태가 모두 초기화됨 (페이지를 다시 열면 데이터가 저장되지 않음)</td>
+                <td><span class="tag tag-pass">PASS</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="back-row">
+          <a href="project.html" class="btn btn-secondary">← 체험단 페이지로 돌아가기</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 QA Portfolio.</p>
+    </div>
+  </footer>
+
+  <script>
+    function filterTC(type, btn) {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const rows = document.querySelectorAll('#tcTable tbody tr:not(.group-header)');
+      rows.forEach(row => {
+        if (type === 'all') {
+          row.style.display = '';
+        } else {
+          const types = (row.dataset.type || '').split(' ');
+          row.style.display = types.includes(type) ? '' : 'none';
+        }
+      });
+
+      document.querySelectorAll('#tcTable tbody tr.group-header').forEach(header => {
+        let next = header.nextElementSibling;
+        let hasVisible = false;
+        while (next && !next.classList.contains('group-header')) {
+          if (next.style.display !== 'none') { hasVisible = true; break; }
+          next = next.nextElementSibling;
+        }
+        header.style.display = hasVisible ? '' : 'none';
+      });
+    }
+  </script>
+
+</body>
+</html>
