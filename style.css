@@ -1193,17 +1193,9 @@ textarea:focus {
 }
 
 /* ===== Video section (automation.html) ===== */
-.video-wrap {
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(15, 23, 42, 0.12);
-  line-height: 0;
-}
-
-.video-wrap video {
+.video-wrap iframe {
   width: 100%;
-  height: auto;
-  display: block;
+  aspect-ratio: 16 / 9;
 }
 
 @media (max-width: 1024px) {
